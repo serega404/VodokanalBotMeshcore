@@ -1,0 +1,27 @@
+services:
+  vodokanalbot-meshcore:
+    image: ghcr.io/serega404/vodokanalbotmeshcore/vodokanalbot-meshcore:main
+    build:
+      context: .
+      args:
+        START_FILE: start_meshcore_tcp.py
+    container_name: VodokanalBotMeshCore
+    restart: always
+    environment:
+      TZ: Europe/Moscow
+      MESHCORE_TCP_HOST: 192.168.1.100
+      MESHCORE_TCP_PORT: "5000"
+      MESHCORE_TCP_TIMEOUT_SECONDS: "15"
+      MESHCORE_CHANNEL: "5"
+      MESHCORE_MESSAGE_LIMIT_BYTES: "133"
+      MESHCORE_CYR2LAT_MODE: soft
+      MESHCORE_CHUNK_DELAY_MS: "1500"
+      MESHCORE_POST_DELAY_MS: "3000"
+      # VODOKANAL_URL: http://www.tgnvoda.ru/avarii.php
+      # PROXY_URL: socks5h://user:password@proxy-host:1080
+      # PROXY_URL: http://user:password@proxy-host:3128
+    volumes:
+      - vodokanal_bot_data:/app/data
+
+volumes:
+  vodokanal_bot_data:
